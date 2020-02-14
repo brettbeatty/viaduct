@@ -1,4 +1,4 @@
-defmodule Alpha do
+defmodule Viaduct.Alpha do
   use GenServer
 
   def start_link(opts \\ []) do
@@ -17,7 +17,7 @@ defmodule Alpha do
     {:reply, counter, counter + 1}
   end
 
-  def counter do
-    GenServer.call(__MODULE__, :counter)
+  def counter(alpha \\ __MODULE__) do
+    GenServer.call(alpha, :counter)
   end
 end
