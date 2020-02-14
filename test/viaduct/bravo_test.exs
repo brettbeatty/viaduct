@@ -6,9 +6,9 @@ defmodule Viaduct.BravoTest do
   @alpha_name {:via, Registry, {@registry, Alpha}}
 
   setup do
-    {:ok, _registry} = Registry.start_link(name: @registry, keys: :unique)
-    {:ok, alpha_mock} = AlphaMock.start_link(name: @alpha_name, owner: self())
-    {:ok, _bravo} = Bravo.start_link(name: Bravo, registry: @registry)
+    start_supervised! {Registry, name: @registry, keys: :unique}
+    alpha_mock = start_supervised! {AlphaMock, name: @alpha_name, owner: self()}
+    start_supervised! {Bravo, name: Bravo, registry: @registry}
 
     [alpha_mock: alpha_mock]
   end
